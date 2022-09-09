@@ -7,13 +7,12 @@ import (
 )
 
 func main() {
-	prompt := promptui.Select{
-		Label: "Select Day",
-		Items: []string{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
-			"Saturday", "Sunday"},
+	prompt := promptui.Prompt{
+		Label:     "Delete Resource",
+		IsConfirm: true,
 	}
 
-	_, result, err := prompt.Run()
+	result, err := prompt.Run()
 
 	if err != nil {
 		fmt.Printf("Prompt failed %v\n", err)
