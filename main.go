@@ -2,14 +2,34 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/manifoldco/promptui"
 )
 
+type pepper struct {
+	Name     string
+	HeatUnit int
+	Peppers  int
+}
+
 func main() {
+	validate := func(input string) error {
+		_, err := strconv.ParseFloat(input, 64)
+		return err
+	}
+
+	templates := &promptui.PromptTemplates{
+		Prompt:  "{{ . }} ",
+		Valid:   "{{ . | green }} ",
+		Invalid: "{{ . | red }} ",
+		Success: "{{ . | bold }} ",
+	}
+
 	prompt := promptui.Prompt{
-		Label:     "Delete Resource",
-		IsConfirm: true,
+		Label:     "Spicy Level",
+		Templates: templates,
+		Validate:  validate,
 	}
 
 	result, err := prompt.Run()
@@ -19,5 +39,5 @@ func main() {
 		return
 	}
 
-	fmt.Printf("You choose %q\n", result)
+	fmt.Printf("You answered %s\n", result)
 }
